@@ -31,11 +31,12 @@ def readdogspec(dogname):
 	    	datstring=line
 		result=re.search('(.*)dogid=(.*)" onMouseOver(.*)',line)
 		dogid=result.group(2)
-		getdogdata(dogid)
+		getdogdata(dogid,dogname)
 
-def getdogdata(dogid):
+def getdogdata(dogid,dogname):
 # this function downloads the individual dogs race history, from its dogid
-	filedogname=dogid + "-racehist.txt"
+	dogname=dogname.rstrip()
+	filedogname=dogname + "-racehist.txt"
 	fd=open(filedogname,"w")
 	ur="http://thedogs.co.uk/trap6/res_dog_history.php?dogid="+dogid
 	print "URL is ",ur
