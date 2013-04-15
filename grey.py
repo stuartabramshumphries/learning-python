@@ -45,8 +45,14 @@ def getdogdata(dogid,dogname):
 	fd.write(data)
 	f.close()
 	fd.close()
+	extractdata(filedogname,dogname)
 
+def extractdata(filedogname,dogname):
+	fd=open(filedogname,"r")	
+	data=fd.readlines()
+	for line in data:
+         if '<td class="RCelement"><a href="' in line:
+	   print line
+	fd.close
 
 getdognames()
-
-# $Id: grey.py,v 1.5 2012/05/12 15:58:53 stuart Exp stuart $
