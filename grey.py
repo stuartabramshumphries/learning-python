@@ -39,7 +39,6 @@ def getdogdata(dogid,dogname):
 	filedogname=dogname + "-racehist.txt"
 	fd=open(filedogname,"w")
 	ur="http://thedogs.co.uk/trap6/res_dog_history.php?dogid="+dogid
-	print "URL is ",ur
 	f=urllib.urlopen(ur)
 	data=f.read()
 	fd.write(data)
@@ -50,6 +49,8 @@ def getdogdata(dogid,dogname):
 def extractdata(filedogname,dogname):
 	flag = 1
 	fd=open(filedogname,"r")	
+	filedogname2=dogname + "-race-history.txt"
+	fd2=open(filedogname2,"w")	
 	data=fd.readlines()
 	for line in data:
 	 if '<td class="RCelement"><a href="' in line:
@@ -57,12 +58,15 @@ def extractdata(filedogname,dogname):
 	 if re.search('\s+\<\/table>',line): 
 	   flag = 1
 	 if not flag and not '<td class="RCelement"><a href="' in line:
-	   print line
+	   fd2.write( line )
+
 
 #         if '<td class="RCelement"><a href="' in line:
 #	 	print line
 #	 elif re.search('\s+\<\/table>',line):
 #	 	print "AAAARGH"
 	fd.close
+	os.remove(filedogname)
+	fd2.close
 
 getdognames()
