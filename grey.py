@@ -52,7 +52,9 @@ def extractdata(filedogname,dogname):
 	data=fd.readlines()
 	for line in data:
          if '<td class="RCelement"><a href="' in line:
-	   print line
+	 	print line
+	 elif re.search('\s+\<\/table>',line):
+	 	print "AAAARGH"
 	fd.close
 
 getdognames()
