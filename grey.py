@@ -48,13 +48,21 @@ def getdogdata(dogid,dogname):
 	extractdata(filedogname,dogname)
 
 def extractdata(filedogname,dogname):
+	flag = 1
 	fd=open(filedogname,"r")	
 	data=fd.readlines()
 	for line in data:
-         if '<td class="RCelement"><a href="' in line:
-	 	print line
-	 elif re.search('\s+\<\/table>',line):
-	 	print "AAAARGH"
+	 if '<td class="RCelement"><a href="' in line:
+	   flag = 0
+	 if re.search('\s+\<\/table>',line): 
+	   flag = 1
+	 if not flag and not '<td class="RCelement"><a href="' in line:
+	   print line
+
+#         if '<td class="RCelement"><a href="' in line:
+#	 	print line
+#	 elif re.search('\s+\<\/table>',line):
+#	 	print "AAAARGH"
 	fd.close
 
 getdognames()
