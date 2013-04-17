@@ -5,7 +5,7 @@ import os
 dognames="./dognames.txt"
 
 def readdogs(dogname):
-# this function reads the primary page for eachdog
+	'''  this function reads the primary page for eachdog '''
 	dogname=dogname.replace(" ","+")
 	f=urllib.urlopen("http://thedogs.co.uk/trap6/res_dog_search.php?txtDogName="+dogname)
 	ddogname=dogname.rstrip()+".txt"
@@ -18,13 +18,13 @@ def readdogs(dogname):
 	os.remove(ddogname)
 
 def getdognames():
-# this function reads a list of dognames from file
+	''' this function reads a list of dognames from file '''
 	dogname=open(dognames,"r").readlines()
 	for n in dogname:
 		readdogs(n)
 
 def readdogspec(dogname):
-# this function finds the specific URL for each dog and then downloads the dog history
+	''' this function finds the specific URL for each dog and then downloads the dog history '''
 	n2=open(dogname.rstrip()+".txt","r").readlines()
 	for line in n2:
 	    if "dogid" in line:
@@ -34,7 +34,7 @@ def readdogspec(dogname):
 		getdogdata(dogid,dogname)
 
 def getdogdata(dogid,dogname):
-# this function downloads the individual dogs race history, from its dogid
+	''' this function downloads the individual dogs race history, from its dogid '''
 	dogname=dogname.rstrip()
 	filedogname=dogname + "-racehist.txt"
 	fd=open(filedogname,"w")
@@ -47,6 +47,7 @@ def getdogdata(dogid,dogname):
 	extractdata(filedogname,dogname)
 
 def extractdata(filedogname,dogname):
+	'''  what this function does is to format the downloaded history - basically get rid of the extraneous html '''
 	flag = 1
 	fd=open(filedogname,"r")	
 	filedogname2=dogname + "-race-history.txt"
@@ -70,3 +71,4 @@ def extractdata(filedogname,dogname):
 	fd2.close
 
 getdognames()
+#print readdogs.__doc__
