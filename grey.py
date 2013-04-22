@@ -55,11 +55,12 @@ def extractdata(filedogname,dogname):
 	data=fd.readlines()
 	for line in data:
 	 if '<td class="RCelement"><a href="' in line:
+	   fd2.write(line)
 	   flag = 0
 	 if re.search('\s+\<\/table>',line): 
 	   flag = 1
 	 if not flag and not '<td class="RCelement"><a href="' in line:
-	   fd2.write( line )
+	   fd2.write(line)
 
 
 #         if '<td class="RCelement"><a href="' in line:
@@ -67,8 +68,32 @@ def extractdata(filedogname,dogname):
 #	 elif re.search('\s+\<\/table>',line):
 #	 	print "AAAARGH"
 	fd.close
-	os.remove(filedogname)
+#	os.remove(filedogname)
 	fd2.close
+	analyse_data(dogname)
+
+def analyse_data(dogname):
+	''' this function analyses the dogs racing history
+	shall we graph this and the moving average?
+	certainly want to do a rating '''
+	filedogname2=dogname + "-race-history.txt"
+	fd2=open(filedogname2,"r")
+	data=fd2.readlines()
+	#print "number of lines in file is ",len(data)
+	for line in data:
+		pass
+	# what I want here is to extract the racehistory into an array
+	#	lines of interest
+	# this info repeats every 16 lines until the EOF
+	date=1
+	dis=2
+	brk=4
+	pos=5
+	tim=10
+	grade=13
+	calctim=14
+	
+	fd2.close()
 
 getdognames()
 #print readdogs.__doc__
