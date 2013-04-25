@@ -78,33 +78,19 @@ def analyse_data(dogname):
 	for i,line in enumerate(data):
 		 if '<td class="RCelement"><a href="res_race_result.php?raceid=' in line:
 		   line=line.replace('<td class="RCelement"><a href="res_race_result.php?raceid=','')		   
-		   line=line.replace('</a></td>','')
-		   line=re.sub(r"^.*\>",'',line)
+		   line=line.replace('</a></td>',' ')
+		   line=re.sub(r"^.*\>","",line)
+                   fd.write("\n"),
                    fd.write(line.strip()),
-		 elif i == 1 or (i-1) % 16 == 0:
-		   line=line.replace('<td class="RCelement">','')
-		   line=re.sub(r"</td>$",'',line)
-		   fd.write(line.strip()),
-		 elif i == 3 or (i-3) % 16 ==0:
-		   line=line.replace('<td class="RCelement">','')
-		   line=re.sub(r"</td>$",'',line)
-		   fd.write(line.strip()),
-		 elif i == 4 or (i-4) % 16 == 0:
-		  line=line.replace('<td class="RCelement">','')
-		  line=re.sub(r"</td>$",'',line)
-		  fd.write(line.strip()),
-		 elif i== 9 or (i-9) % 16 ==0:
-		  line=line.replace('<td class="RCelement">','')
-		  line=re.sub(r"</td>$",'',line)
-		  fd.write(line.strip()),
-		 elif i == 12 or (i - 12) % 16 ==0:
-		  line=line.replace('<td class="RCelement">','')
-		  line=re.sub(r"</td>$",'',line)
-		  fd.write(line.strip()),
-		 elif i == 13 or (i - 13) % 16 ==0:
-		  line=line.replace('<td class="RCelement">','')
-		  line=re.sub(r"</td>$",'',line)
-		  fd.write(line.strip())
+                   fd.write(" "),
+		 
+		 else:
+		  for j in [1,3,4,9,12,13]:
+		   if i == j or (i-j) % 16 == 0:
+		     line=line.replace('<td class="RCelement">','')
+		     line=re.sub(r"</td>$",'',line)
+		     fd.write(line.strip()),
+		     fd.write(" "),
 
 	
 	fd.close()
