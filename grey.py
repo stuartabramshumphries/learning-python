@@ -5,7 +5,7 @@ import os
 dognames="./dognames.txt"
 
 def readdogs(dogname):
-	'''  this function reads the primary page for eachdog '''
+	'''  this function reads the primary web page for eachdog '''
 	dogname=dogname.replace(" ","+")
 	f=urllib.urlopen("http://thedogs.co.uk/trap6/res_dog_search.php?txtDogName="+dogname)
 	ddogname=dogname.rstrip()+".txt"
@@ -70,6 +70,7 @@ def extractdata(filedogname,dogname):
 	analyse_data(dogname)
 
 def analyse_data(dogname): 
+	'''  this function extracts the dog data we want from its history '''
 	filedogname2=dogname + "-race-history.txt"
 	fd=open(dogname +"-data.txt","w")
 	fd2=open(filedogname2,"r")
