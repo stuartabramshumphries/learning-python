@@ -1,7 +1,14 @@
 #!/usr/bin/python
 
-from movingaverage import *
 ''' basically movingaverage(data,period) , where data is a list/tuple? '''
+
+import matplotlib.pyplot as plt
+from movingaverage import *
+
+plt.plot([1,2,3,4])
+plt.ylabel('some numbers')
+plt.show()
+
 
 # basically need to read the data from our history file, put into a list and then use the movingaverage
 
@@ -19,3 +26,4 @@ for line in dat:
 
 for num in list(movingaverage(data,period)):
   print "moving average = %0.2f "  % num
+

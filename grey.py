@@ -1,8 +1,61 @@
 #!/usr/bin/python
 import urllib
+import sys
 import re
 import os
+#import matplotlib.pyplot as plt
+from movingaverage import *
+from multiprocessing import Process
+#from Tkinter import *
+#import tkSimpleDialog
+
+''' this program does a graphical way to input 6 dognames (i.e. for a race) - then saves them to the dognames.txt file for processing '''
+#''' class MyDialog(tkSimpleDialog.Dialog):
+#
+#    def body(self, master):
+#
+#        Label(master, text="First Dog :").grid(row=0)
+#        Label(master, text="Second Dog :").grid(row=1)
+#        Label(master, text="Third Dog :").grid(row=2)
+#        Label(master, text="Fourth Dog :").grid(row=3)
+#        Label(master, text="Fifth Dog :").grid(row=4)
+#        Label(master, text="Sixth Dog :").grid(row=5)
+#
+#        self.e1 = Entry(master)
+#        self.e2 = Entry(master)
+#        self.e3 = Entry(master)
+#        self.e4 = Entry(master)
+#        self.e5 = Entry(master)
+#        self.e6 = Entry(master)
+#
+#        self.e1.grid(row=0, column=1)
+#        self.e2.grid(row=1, column=1)
+#        self.e3.grid(row=2, column=1)
+#        self.e4.grid(row=3, column=1)
+#        self.e5.grid(row=4, column=1)
+#        self.e6.grid(row=5, column=1)
+#        return self.e1 # initial focus
+#
+#    def apply(self):
+#        first = self.e1.get()
+#        second = self.e2.get()
+#        third = self.e3.get()
+#        fourth = self.e4.get()
+#        fifth = self.e5.get()
+#        sixth = self.e6.get()
+#        '''fd=open("dognames.txt","w")
+#
+#	for name in first,second,third,fourth,fifth,sixth:
+#         fd.write(name)
+#         fd.write("\n")
+# 	fd.close() '''
+# 
+#'''
+
 dognames="./dognames.txt"
+#root=Tk()
+#d = MyDialog(root)
+
 
 def readdogs(dogname):
 	'''  this function reads the primary web page for eachdog '''
@@ -21,6 +74,7 @@ def getdognames():
 	''' this function reads a list of dognames from file '''
 	dogname=open(dognames,"r").readlines()
 	for n in dogname:
+		print n
 		readdogs(n)
 
 def readdogspec(dogname):
@@ -81,7 +135,8 @@ def analyse_data(dogname):
 		   line=line.replace('<td class="RCelement"><a href="res_race_result.php?raceid=','')		   
 		   line=line.replace('</a></td>',' ')
 		   line=re.sub(r"^.*\>","",line)
-                   fd.write("\n"),
+		   if i != 0:
+		    fd.write("\n")
                    fd.write(line.strip()),
                    fd.write(" "),
 		 
@@ -97,4 +152,43 @@ def analyse_data(dogname):
 	fd.close()
 	fd2.close()
 	os.remove(filedogname2)
+	calc_moving_average(dogname)
+
+def calc_moving_average(dogname):
+      
+      ''' basically movingaverage(data,period) , where data is a list/tuple? '''
+      
+      period=2 # arbitrary here - maybe ask what moving average you want at the start?
+      try:
+       fd=open(dogname +"-data.txt","r")
+      except:
+       print "cant open the file"
+      
+      dat=fd.readlines()
+      data=[]
+      
+      for line in dat:
+	splitline=line.split()
+      	num=float(splitline[-1])
+      	if int(num) != 0:
+      	  data.append(num)
+
+      klist=list(movingaverage(data,period))
+      #print_graph(klist,dogname) 
+      #print_graph(data,period,dogname)
+      
+#def print_graph(klist,dogname):
+#      ''' prints moving average data '''
+#      #plt.plot(klist1,'ro',klist2,'bs',klist3,'g^',klist4,'c+',klist5,'mx',klist6,'yd')
+#      plt.title('racehist')
+#      plt.xlabel('number of races')
+#      plt.ylabel('moving average of dogs position')
+#      plt.plot(klist,label=dogname)
+#      plt.legend()
+
+
 getdognames()
+#plt.show()
+
+
+
