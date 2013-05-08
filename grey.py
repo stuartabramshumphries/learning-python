@@ -158,7 +158,7 @@ def calc_moving_average(dogname):
       
       ''' basically movingaverage(data,period) , where data is a list/tuple? '''
       
-      period=2 # arbitrary here - maybe ask what moving average you want at the start?
+      period=4 # arbitrary here - maybe ask what moving average you want at the start?
       try:
        fd=open(dogname +"-data.txt","r")
       except:
@@ -169,7 +169,10 @@ def calc_moving_average(dogname):
       
       for line in dat:
 	splitline=line.split()
-      	num=float(splitline[-1])
+	pos=splitline[3]
+	pos=pos[:-2]
+      	num=float(pos)
+
       	if int(num) != 0:
       	  data.append(num)
 
