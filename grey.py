@@ -36,7 +36,7 @@ from multiprocessing import Process
 #        self.e6.grid(row=5, column=1)
 #        return self.e1 # initial focus
 #
-#    def apply(self):
+#i    def apply(self):
 #        first = self.e1.get()
 #        second = self.e2.get()
 #        third = self.e3.get()
@@ -174,6 +174,8 @@ def calc_moving_average(dogname):
       	  data.append(num)
 
       klist=list(movingaverage(data,period))
+      print "\nyo bitch, heres the moving averages \n"
+      print klist
       #print_graph(klist,dogname) 
       #print_graph(data,period,dogname)
       
