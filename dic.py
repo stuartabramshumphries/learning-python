@@ -20,7 +20,6 @@ rats={
 'S9':{1:70,2:60,3:50,4:40,5:30,6:20} }
 
 
-print rats['A1'][2]
-print rats['A5'][6]
-print rats['A9'][4]
-print rats['S1'][1]
+a='S1'
+b=1
+print rats[a][b]

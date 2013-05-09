@@ -169,6 +169,8 @@ def calc_moving_average(dogname):
       'A8':{1:99,2:86,3:77,4:66,5:53,6:42},
       'A9':{1:90,2:60,3:50,4:40,5:30,6:20},
       'A10':{1:80,2:60,3:50,4:40,5:30,6:20},
+      'A15':{1:70,2:50,3:40,4:30,5:20,6:10},
+      'B1':{1:60,2:50,3:40,4:30,5:20,6:10},
       'S1':{1:170,2:159,3:144,4:135,5:125,6:110},
       'S2':{1:151,2:135,3:123,4:107,5:96,6:82},
       'S3':{1:127,2:118,3:101,4:90,5:71,6:58},
@@ -199,12 +201,14 @@ def calc_moving_average(dogname):
 	pos=splitline[3]
 	grade=splitline[5]
 	pos=pos[:-2]
-      	num=float(pos)
-	print grade,pos
-      	if int(num) != 0:
-      	  data.append(num)
+      	pos=int(pos)
+#	grade="'"+grade+"'"
+	rat=ratings[grade][pos]
+      	if int(rat) != 0:
+      	  data.append(rat)
 
       klist=list(movingaverage(data,period))
+      print klist
       #print_graph(klist,dogname) 
       #print_graph(data,period,dogname)
       
@@ -220,6 +224,3 @@ def calc_moving_average(dogname):
 
 getdognames()
 #plt.show()
-
-
-
