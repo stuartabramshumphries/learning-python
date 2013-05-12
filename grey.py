@@ -144,7 +144,7 @@ def calc_moving_average(dogname):
        fd=open(dogname +"-data.txt","r")
        fd2=open("ratings.out.txt","a")
       except:
-       print "cant open the file"
+       pass
       
       dat=fd.readlines()
       data=[]
@@ -171,5 +171,6 @@ def print_graph():
       ''' prints moving average data to html file thats viewed in a browser '''
 
 
+os.remove("ratings.out.txt")
 getdognames()
 #plt.show()
