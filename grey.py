@@ -163,21 +163,22 @@ def calc_moving_average(dogname):
       fd2.write(value)
       fd2.write("\n")
       fd2.close()
-      #print_graph(klist,dogname) 
       
 def generate_html_graph():
       ''' prints moving average data to html file thats viewed in a browser '''
       # ['race #', 'Bangcrashwallop', 'Ballymac Barn'], ['1',  160.75, 142.25], ['2',  170,   154.25], ['3',  165.5, 149.5], ['4',  156.25, 121.5] ]);
-
+      dogdat=[]
       text=open("ratings.out.txt","r").readlines()
       count=0
       for line in text:
       	count+=1
-	line=re.sub("\'|\(|\[|\]|\)","",line)
-	print count,line
+	line=re.sub("\'|\(|\[|\]|\)|\,","",line)
+	dogdat.append(line.split())
+      for i in range(2):
+      	for stuff in dogdat[i]:
+		print stuff
 
-
+''' add a check to see if file exists, tehn remove if it does, else it'll error here '''
 os.remove("ratings.out.txt")
 getdognames()
 generate_html_graph()
-#plt.show()
