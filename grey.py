@@ -3,58 +3,10 @@ import urllib
 import sys
 import re
 import os
-#import matplotlib.pyplot as plt
 from movingaverage import *
 from multiprocessing import Process
-#from Tkinter import *
-#import tkSimpleDialog
-
-''' this program does a graphical way to input 6 dognames (i.e. for a race) - then saves them to the dognames.txt file for processing '''
-#''' class MyDialog(tkSimpleDialog.Dialog):
-#
-#    def body(self, master):
-#
-#        Label(master, text="First Dog :").grid(row=0)
-#        Label(master, text="Second Dog :").grid(row=1)
-#        Label(master, text="Third Dog :").grid(row=2)
-#        Label(master, text="Fourth Dog :").grid(row=3)
-#        Label(master, text="Fifth Dog :").grid(row=4)
-#        Label(master, text="Sixth Dog :").grid(row=5)
-#
-#        self.e1 = Entry(master)
-#        self.e2 = Entry(master)
-#        self.e3 = Entry(master)
-#        self.e4 = Entry(master)
-#        self.e5 = Entry(master)
-#        self.e6 = Entry(master)
-#
-#        self.e1.grid(row=0, column=1)
-#        self.e2.grid(row=1, column=1)
-#        self.e3.grid(row=2, column=1)
-#        self.e4.grid(row=3, column=1)
-#        self.e5.grid(row=4, column=1)
-#        self.e6.grid(row=5, column=1)
-#        return self.e1 # initial focus
-#
-#i    def apply(self):
-#        first = self.e1.get()
-#        second = self.e2.get()
-#        third = self.e3.get()
-#        fourth = self.e4.get()
-#        fifth = self.e5.get()
-#        sixth = self.e6.get()
-#        '''fd=open("dognames.txt","w")
-#
-#	for name in first,second,third,fourth,fifth,sixth:
-#         fd.write(name)
-#         fd.write("\n")
-# 	fd.close() '''
-# 
-#'''
 
 dognames="./dognames.txt"
-#root=Tk()
-#d = MyDialog(root)
 
 
 def readdogs(dogname):
@@ -190,6 +142,7 @@ def calc_moving_average(dogname):
       period=4 # arbitrary here - maybe ask what moving average you want at the start?
       try:
        fd=open(dogname +"-data.txt","r")
+       fd2=open("ratings.out.txt","a")
       except:
        print "cant open the file"
       
@@ -202,24 +155,20 @@ def calc_moving_average(dogname):
 	grade=splitline[5]
 	pos=pos[:-2]
       	pos=int(pos)
-#	grade="'"+grade+"'"
 	rat=ratings[grade][pos]
       	if int(rat) != 0:
       	  data.append(rat)
 
       klist=list(movingaverage(data,period))
-      print klist
+      v=(dogname,klist)
+      value=str(v)
+      fd2.write(value)
+      fd2.write("\n")
+      fd2.close()
       #print_graph(klist,dogname) 
-      #print_graph(data,period,dogname)
       
-#def print_graph(klist,dogname):
-#      ''' prints moving average data '''
-#      #plt.plot(klist1,'ro',klist2,'bs',klist3,'g^',klist4,'c+',klist5,'mx',klist6,'yd')
-#      plt.title('racehist')
-#      plt.xlabel('number of races')
-#      plt.ylabel('moving average of dogs position')
-#      plt.plot(klist,label=dogname)
-#      plt.legend()
+def print_graph():
+      ''' prints moving average data to html file thats viewed in a browser '''
 
 
 getdognames()
