@@ -149,13 +149,14 @@ def calc_moving_average(dogname):
       data=[]
       for line in dat:
 	 splitline=line.split()
-	 pos=splitline[3]
-	 grade=splitline[5]
-	 pos=pos[:-2]
-      	 pos=int(pos)
-	 rat=ratings[grade][pos]
-      	 if int(rat) != 0:
-      	   data.append(rat)
+	 if len(splitline) == 7:
+	  pos=splitline[3]
+	  grade=splitline[5]
+	  pos=pos[:-2]
+      	  pos=int(pos)
+	  rat=ratings[grade][pos]
+      	  if int(rat) != 0:
+      	    data.append(rat)
 
       klist=list(movingaverage(data,period))
       v=(dogname,klist)
