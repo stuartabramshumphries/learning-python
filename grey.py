@@ -171,6 +171,7 @@ def generate_html_graph():
       count=0
       for line in text:
       	count+=1
+	line=re.sub('\(|\[|\]|\)','',line)
 	print count,line
 
 
