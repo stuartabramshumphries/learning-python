@@ -5,7 +5,7 @@
 try:
 	txt=open("./header","r").read()
 	txt2=open("./footer","r").read()
-	fd=open("./data.out","w")
+	fd=open("./graph.html","w")
 except:
 	print "issues opening files\n"
 

@@ -174,9 +174,13 @@ def generate_html_graph():
       	count+=1
 	line=re.sub("\'|\(|\[|\]|\)|\,","",line)
 	dogdat.append(line.split())
-      for i in range(2):
-      	for stuff in dogdat[i]:
-		print stuff
+
+      print "['race #'",
+      for line in xrange(count):
+	print ",'",dogdat[line][0],"'",
+      print "]"	
+
+
 
 ''' add a check to see if file exists, tehn remove if it does, else it'll error here '''
 os.remove("ratings.out.txt")
