@@ -26,7 +26,6 @@ def getdognames():
 	''' this function reads a list of dognames from file '''
 	dogname=open(dognames,"r").readlines()
 	for n in dogname:
-		print n
 		readdogs(n)
 
 def readdogspec(dogname):
@@ -71,7 +70,7 @@ def extractdata(filedogname,dogname):
 
 
 	fd.close
-	#os.remove(filedogname)
+	os.remove(filedogname)
 	fd2.close
 	analyse_data(dogname)
 
@@ -166,10 +165,16 @@ def calc_moving_average(dogname):
       fd2.close()
       #print_graph(klist,dogname) 
       
-def print_graph():
+def generate_html_graph():
       ''' prints moving average data to html file thats viewed in a browser '''
+      text=open("ratings.out.txt","r").readlines()
+      count=0
+      for line in text:
+      	count+=1
+	print count,line
 
 
 os.remove("ratings.out.txt")
 getdognames()
+generate_html_graph()
 #plt.show()
