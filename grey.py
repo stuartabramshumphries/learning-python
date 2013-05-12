@@ -61,17 +61,17 @@ def extractdata(filedogname,dogname):
 	fd2=open(filedogname2,"w")	
 	data=fd.readlines()
 	for line in data:
-	 if '<td class="RCelement"><a href="' in line:
-	   fd2.write(line)
-	   flag = 0
-	 if re.search('\s+\<\/table>',line): 
-	   flag = 1
-	 if not flag and not '<td class="RCelement"><a href="' in line:
-	   fd2.write(line)
+ 	  if '<td class="RCelement"><a href="' in line:
+ 	   fd2.write(line)
+ 	   flag = 0
+ 	  if re.search('\s+\<\/table>',line): 
+ 	   flag = 1
+ 	  if not flag and not '<td class="RCelement"><a href="' in line:
+ 	   fd2.write(line)
 
 
 	fd.close
-	os.remove(filedogname)
+	#os.remove(filedogname)
 	fd2.close
 	analyse_data(dogname)
 
@@ -147,11 +147,7 @@ def calc_moving_average(dogname):
       
       dat=fd.readlines()
       data=[]
-      
-      numrace=0
       for line in dat:
-        while numrace<=10:
-	 numrace+=1
 	 splitline=line.split()
 	 pos=splitline[3]
 	 grade=splitline[5]
