@@ -167,11 +167,13 @@ def calc_moving_average(dogname):
       
 def generate_html_graph():
       ''' prints moving average data to html file thats viewed in a browser '''
+      # ['race #', 'Bangcrashwallop', 'Ballymac Barn'], ['1',  160.75, 142.25], ['2',  170,   154.25], ['3',  165.5, 149.5], ['4',  156.25, 121.5] ]);
+
       text=open("ratings.out.txt","r").readlines()
       count=0
       for line in text:
       	count+=1
-	line=re.sub('\(|\[|\]|\)','',line)
+	line=re.sub("\'|\(|\[|\]|\)","",line)
 	print count,line
 
 
