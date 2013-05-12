@@ -81,7 +81,6 @@ def analyse_data(dogname):
 	fd=open(dogname +"-data.txt","w")
 	fd2=open(filedogname2,"r")
 	data=fd2.readlines()
-
 	for i,line in enumerate(data):
 		 if '<td class="RCelement"><a href="res_race_result.php?raceid=' in line:
 		   line=line.replace('<td class="RCelement"><a href="res_race_result.php?raceid=','')		   
@@ -149,15 +148,18 @@ def calc_moving_average(dogname):
       dat=fd.readlines()
       data=[]
       
+      numrace=0
       for line in dat:
-	splitline=line.split()
-	pos=splitline[3]
-	grade=splitline[5]
-	pos=pos[:-2]
-      	pos=int(pos)
-	rat=ratings[grade][pos]
-      	if int(rat) != 0:
-      	  data.append(rat)
+        while numrace<=10:
+	 numrace+=1
+	 splitline=line.split()
+	 pos=splitline[3]
+	 grade=splitline[5]
+	 pos=pos[:-2]
+      	 pos=int(pos)
+	 rat=ratings[grade][pos]
+      	 if int(rat) != 0:
+      	   data.append(rat)
 
       klist=list(movingaverage(data,period))
       v=(dogname,klist)
