@@ -57,7 +57,7 @@ def extractdata(filedogname,dogname):
 	'''  what this function does is to format the downloaded history - basically get rid of the extraneous html '''
 	flag = 1
 	fd=open(filedogname,"r")	
-	filedogname2=dogname + "-race-history.txt"
+	filedogname2=dogname + "-rh.txt"
 	fd2=open(filedogname2,"w")	
 	data=fd.readlines()
 	for line in data:
@@ -71,16 +71,24 @@ def extractdata(filedogname,dogname):
 
 
 	fd.close
-	os.remove(filedogname)
+	#os.remove(filedogname)
 	fd2.close
 	analyse_data(dogname)
 
 def analyse_data(dogname): 
 	'''  this function extracts the dog data we want from its history '''
-	filedogname2=dogname + "-race-history.txt"
+	filedogname2=dogname + "-rh.txt"
+	print "filename is ", filedogname2
 	fd=open(dogname +"-data.txt","w")
-	fd2=open(filedogname2,"r")
-	data=fd2.readlines()
+	try:
+	 #fd3=open(filedogname2,"r")
+	 fd3=open(dogname + "-rh.txt","r+")
+	 print fd3
+	except:
+	 print "cant open filename"
+	fd3.seek(0,0)
+	data=fd3.readlines()
+	fd3.close
 	for i,line in enumerate(data):
 		 if '<td class="RCelement"><a href="res_race_result.php?raceid=' in line:
 		   line=line.replace('<td class="RCelement"><a href="res_race_result.php?raceid=','')		   
@@ -101,8 +109,7 @@ def analyse_data(dogname):
 
 	
 	fd.close()
-	fd2.close()
-	os.remove(filedogname2)
+	#os.remove(filedogname2)
 	calc_moving_average(dogname)
 
 def calc_moving_average(dogname):
