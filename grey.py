@@ -179,6 +179,9 @@ def generate_html_graph():
       for line in xrange(count):
 	print ",'",dogdat[line][0],"'",
       print "]"	
+      for line in xrange(5):
+       print ",['",line+1,"'",dogdat[line][1]
+      #,dogdat[line+1][1],dogdat[line+2][1],dogdat[line+3][1]
 
 
 
