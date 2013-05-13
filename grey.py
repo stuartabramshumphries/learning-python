@@ -167,6 +167,16 @@ def calc_moving_average(dogname):
       
 def generate_html_graph():
       ''' prints moving average data to html file thats viewed in a browser '''
+      try:
+         txt=open("./header","r").read()
+         txt2=open("./footer","r").read()
+         fd=open("./graph.html","w")
+      except:
+         print "issues opening files\n"
+
+      fd.write(txt)
+
+
       dogdat=[]
       text=open("ratings.out.txt","r").readlines()
       count=0
@@ -175,20 +185,19 @@ def generate_html_graph():
 	line=re.sub("\'|\(|\[|\]|\)|\,","",line)
 	dogdat.append(line.split())
 
-      print "['race #'",
+      fd.write( "['race #'",)
       for line in xrange(count):
-	print ",'",dogdat[line][0],"'",
-      print "],"	
-      #for line in xrange(6):
-#      print line,line+1,line+2,line+3,line+4,line+5
+	fd.write(",'",dogdat[line][0],"'",)
+      fd.write( "],")
       line=0
       for i in range(1,7):
-       print "['",i,"'",dogdat[line][i], ",",dogdat[line+1][i],",",dogdat[line+2][i],",",dogdat[line+3][i],",",dogdat[line+4][i],",",dogdat[line+5][i],"]",
+       fd.write( "['",i,"'",dogdat[line][i], ",",dogdat[line+1][i],",",dogdat[line+2][i],",",dogdat[line+3][i],",",dogdat[line+4][i],",",dogdat[line+5][i],"]",)
        if i<=5:
-        print ","
+        fd.write( ",")
        else:
-        print "]);"
-
+        fd.write( "]);")
+      fd.write(txt2)
+      fd.close()
 
 
 ''' add a check to see if file exists, then remove if it does, else it'll error here '''
