@@ -135,6 +135,8 @@ def calc_moving_average(dogname):
       'E1':{1:118,2:103,3:91,4:82,5:69,6:58},
       'H3':{1:118,2:103,3:91,4:82,5:69,6:58},
       'P3':{1:99,2:86,3:77,4:66,5:53,6:42},
+      'P4':{1:99,2:86,3:77,4:66,5:53,6:42},
+      'P6':{1:90,2:80,3:70,4:60,5:50,6:40},
       'IV':{1:170,2:152,3:143,4:133,5:122,6:106},
       'OR':{1:170,2:152,3:143,4:133,5:122,6:106}
       }
@@ -191,7 +193,8 @@ def generate_html_graph():
 	fd.write(st2)
       fd.write( "],")
       line=0
-      for i in range(1,7):
+      for i in xrange(1,7):
+       #st3=" ['" +str(i)+"'," +dogdat[line][i] +","+ dogdat[line+1][i] +","+dogdat[line+2][i]+","+dogdat[line+3][i]+","+dogdat[line+4][i]+","+dogdat[line+5][i]+",] "
        st3=" ['" +str(i)+"'," +dogdat[line][i] +","+ dogdat[line+1][i] +","+dogdat[line+2][i]+","+dogdat[line+3][i]+","+dogdat[line+4][i]+","+dogdat[line+5][i]+",] "
        fd.write(st3) 
        if i<=6:
@@ -203,6 +206,7 @@ def generate_html_graph():
 
 
 ''' add a check to see if file exists, then remove if it does, else it'll error here '''
-#os.remove("ratings.out.txt")
-#getdognames()
+if os.path.exists("./ratings.out.txt"):
+ os.remove("ratings.out.txt")
+getdognames()
 generate_html_graph()
