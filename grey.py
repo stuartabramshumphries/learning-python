@@ -20,7 +20,7 @@ def readdogs(dogname):
 	f.close()
 	webout.close()
 	readdogspec(dogname)
-	os.remove(ddogname)
+	#os.remove(ddogname)
 
 def getdognames():
 	''' this function reads a list of dognames from file '''
@@ -140,7 +140,7 @@ def calc_moving_average(dogname):
       'IV':{1:170,2:152,3:143,4:133,5:122,6:106},
       'OR':{1:170,2:152,3:143,4:133,5:122,6:106}
       }
-      period=4 # arbitrary here - maybe ask what moving average you want at the start?
+      period=1 # arbitrary here - maybe ask what moving average you want at the start?
       try:
        fd=open(dogname +"-data.txt","r")
        fd2=open("ratings.out.txt","a")
