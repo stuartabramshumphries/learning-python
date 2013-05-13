@@ -194,7 +194,7 @@ def generate_html_graph():
       for i in range(1,7):
        st3=" ['" +str(i)+"'," +dogdat[line][i] +","+ dogdat[line+1][i] +","+dogdat[line+2][i]+","+dogdat[line+3][i]+","+dogdat[line+4][i]+","+dogdat[line+5][i]+",] "
        fd.write(st3) 
-       if i<=5:
+       if i<=6:
         fd.write( ",")
        else:
         fd.write( "]);")
