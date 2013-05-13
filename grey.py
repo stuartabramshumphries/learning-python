@@ -183,7 +183,11 @@ def generate_html_graph():
 #      print line,line+1,line+2,line+3,line+4,line+5
       line=0
       for i in range(1,7):
-       print i,dogdat[line][i] ,dogdat[line+1][i],dogdat[line+2][i],dogdat[line+3][i],dogdat[line+4][i],dogdat[line+5][i]#,dogdat[line+6][i]
+       print "['",i,"'",dogdat[line][i], ",",dogdat[line+1][i],",",dogdat[line+2][i],",",dogdat[line+3][i],",",dogdat[line+4][i],",",dogdat[line+5][i],"]",
+       if i<=5:
+        print ","
+       else:
+        print "]);"
 
 
 
