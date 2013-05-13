@@ -184,14 +184,16 @@ def generate_html_graph():
       	count+=1
 	line=re.sub("\'|\(|\[|\]|\)|\,","",line)
 	dogdat.append(line.split())
-
-      fd.write( "['race #'",)
+      st1="\"['race #'\","
+      fd.write(st1)
       for line in xrange(count):
-	fd.write(",'",dogdat[line][0],"'",)
+	st2="\",'\",dogdat[line][0],\"'\","
+	fd.write(st2)
       fd.write( "],")
       line=0
       for i in range(1,7):
-       fd.write( "['",i,"'",dogdat[line][i], ",",dogdat[line+1][i],",",dogdat[line+2][i],",",dogdat[line+3][i],",",dogdat[line+4][i],",",dogdat[line+5][i],"]",)
+       st3=" \"['\",i,\"'\",dogdat[line][i], \",\",dogdat[line+1][i],\",\",dogdat[line+2][i],\",\",dogdat[line+3][i],\",\",dogdat[line+4][i],\",\",dogdat[line+5][i],\"]\", "
+       fd.write(st3) 
        if i<=5:
         fd.write( ",")
        else:
