@@ -26,6 +26,7 @@ def getdognames():
 	''' this function reads a list of dognames from file '''
 	dogname=open(dognames,"r").readlines()
 	for n in dogname:
+		print n
 		readdogs(n)
 
 def readdogspec(dogname):
@@ -166,7 +167,6 @@ def calc_moving_average(dogname):
       
 def generate_html_graph():
       ''' prints moving average data to html file thats viewed in a browser '''
-      # ['race #', 'Bangcrashwallop', 'Ballymac Barn'], ['1',  160.75, 142.25], ['2',  170,   154.25], ['3',  165.5, 149.5], ['4',  156.25, 121.5] ]);
       dogdat=[]
       text=open("ratings.out.txt","r").readlines()
       count=0
@@ -178,14 +178,16 @@ def generate_html_graph():
       print "['race #'",
       for line in xrange(count):
 	print ",'",dogdat[line][0],"'",
-      print "]"	
-      for line in xrange(5):
-       print ",['",line+1,"'",dogdat[line][1]
-      #,dogdat[line+1][1],dogdat[line+2][1],dogdat[line+3][1]
+      print "],"	
+      #for line in xrange(6):
+#      print line,line+1,line+2,line+3,line+4,line+5
+      line=0
+      for i in range(1,7):
+       print i,dogdat[line][i] ,dogdat[line+1][i],dogdat[line+2][i],dogdat[line+3][i],dogdat[line+4][i],dogdat[line+5][i]#,dogdat[line+6][i]
 
 
 
-''' add a check to see if file exists, tehn remove if it does, else it'll error here '''
-os.remove("ratings.out.txt")
-getdognames()
+''' add a check to see if file exists, then remove if it does, else it'll error here '''
+#os.remove("ratings.out.txt")
+#getdognames()
 generate_html_graph()
