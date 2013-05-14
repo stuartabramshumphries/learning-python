@@ -11,13 +11,12 @@ dognames="./dognames.txt"
 
 def analyse_data(dogname): 
 #	'''  this function extracts the dog data we want from its history '''
-	dogname="frettenham+flyer"
 	filedogname2=dogname + "-rh.txt"
 	print "filename is ", filedogname2
 	#fd3=open(filedogname2,"r")
-	fd3=open("./frettenham+flyer-rh.txt","rb")
+	#fd3=open("./frettenham+flyer-rh.txt","rb")
 	fd=open(dogname +"-data.txt","w")
-	#fd3=open(dogname + "-rh.txt","r+")
+	fd3=open(dogname + "-rh.txt","r+")
 	data=fd3.readlines()
 	fd3.close()
 	for i,line in enumerate(data):
@@ -163,21 +162,21 @@ def calc_moving_average(dogname):
       	  pos=int(pos)
 	  calt=splitline[6]
 	  print calt
-	  calctime = int(calt)
+	  calctime = calt
 	  rat=ratings[grade][pos]
-      	  if calctime != 0:
-      	    data_calctime.append(calctime)
+      	  #if calctime != 0:
+      	  #  data_calctime.append(calctime)
       	  if int(rat) != 0:
       	    data.append(rat)
 
       klist=list(movingaverage(data,period))
-      klist2=list(movingaverage(data_calctime,period))
+      #klist2=list(movingaverage(data_calctime,period))
       v=(dogname,klist)
-      v2=(dogname,klist2)
+      #v2=(dogname,klist2)
       value=str(v)
-      value2=str(v2)
+      #value2=str(v2)
       fd2.write(value)
-      fd2.write(value2)
+      #fd2.write(value2)
       fd2.write("\n")
       fd2.close()
       
