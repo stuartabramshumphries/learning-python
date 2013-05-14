@@ -9,6 +9,39 @@ from multiprocessing import Process
 dognames="./dognames.txt"
 
 
+def analyse_data(dogname): 
+#	'''  this function extracts the dog data we want from its history '''
+	dogname="frettenham+flyer"
+	filedogname2=dogname + "-rh.txt"
+	print "filename is ", filedogname2
+	#fd3=open(filedogname2,"r")
+	fd3=open("./frettenham+flyer-rh.txt","rb")
+	fd=open(dogname +"-data.txt","w")
+	#fd3=open(dogname + "-rh.txt","r+")
+	data=fd3.readlines()
+	fd3.close()
+	for i,line in enumerate(data):
+		 if '<td class="RCelement"><a href="res_race_result.php?raceid=' in line:
+		   line=line.replace('<td class="RCelement"><a href="res_race_result.php?raceid=','')		   
+		   line=line.replace('</a></td>',' ')
+		   line=re.sub(r"^.*\>","",line)
+		   if i != 0:
+		    fd.write("\n")
+                   fd.write(line.strip()),
+                   fd.write(" "),
+		 
+		 else:
+		  for j in [1,3,4,9,12,13]:
+		   if i == j or (i-j) % 16 == 0:
+		     line=line.replace('<td class="RCelement">','')
+		     line=re.sub(r"</td>$",'',line)
+		     fd.write(line.strip()),
+		     fd.write(" "),
+
+	
+	fd.close()
+	#os.remove(filedogname2)
+	calc_moving_average(dogname)
 def readdogs(dogname):
 	'''  this function reads the primary web page for eachdog '''
 	dogname=dogname.replace(" ","+")
@@ -70,47 +103,11 @@ def extractdata(filedogname,dogname):
  	   fd2.write(line)
 
 
-	fd.close
+	fd.close()
 	#os.remove(filedogname)
-	fd2.close
+	fd2.close()
 	analyse_data(dogname)
 
-def analyse_data(dogname): 
-	'''  this function extracts the dog data we want from its history '''
-	filedogname2=dogname + "-rh.txt"
-	print "filename is ", filedogname2
-	fd=open(dogname +"-data.txt","w")
-	try:
-	 #fd3=open(filedogname2,"r")
-	 fd3=open(dogname + "-rh.txt","r+")
-	 print fd3
-	except:
-	 print "cant open filename"
-	fd3.seek(0,0)
-	data=fd3.readlines()
-	fd3.close
-	for i,line in enumerate(data):
-		 if '<td class="RCelement"><a href="res_race_result.php?raceid=' in line:
-		   line=line.replace('<td class="RCelement"><a href="res_race_result.php?raceid=','')		   
-		   line=line.replace('</a></td>',' ')
-		   line=re.sub(r"^.*\>","",line)
-		   if i != 0:
-		    fd.write("\n")
-                   fd.write(line.strip()),
-                   fd.write(" "),
-		 
-		 else:
-		  for j in [1,3,4,9,12,13]:
-		   if i == j or (i-j) % 16 == 0:
-		     line=line.replace('<td class="RCelement">','')
-		     line=re.sub(r"</td>$",'',line)
-		     fd.write(line.strip()),
-		     fd.write(" "),
-
-	
-	fd.close()
-	#os.remove(filedogname2)
-	calc_moving_average(dogname)
 
 def calc_moving_average(dogname):
       
@@ -156,6 +153,7 @@ def calc_moving_average(dogname):
       
       dat=fd.readlines()
       data=[]
+      data_calctime=[]
       for line in dat:
 	 splitline=line.split()
 	 if len(splitline) == 7:
@@ -163,14 +161,23 @@ def calc_moving_average(dogname):
 	  grade=splitline[5]
 	  pos=pos[:-2]
       	  pos=int(pos)
+	  calt=splitline[6]
+	  print calt
+	  calctime = int(calt)
 	  rat=ratings[grade][pos]
+      	  if calctime != 0:
+      	    data_calctime.append(calctime)
       	  if int(rat) != 0:
       	    data.append(rat)
 
       klist=list(movingaverage(data,period))
+      klist2=list(movingaverage(data_calctime,period))
       v=(dogname,klist)
+      v2=(dogname,klist2)
       value=str(v)
+      value2=str(v2)
       fd2.write(value)
+      fd2.write(value2)
       fd2.write("\n")
       fd2.close()
       
