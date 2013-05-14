@@ -12,7 +12,6 @@ dognames="./dognames.txt"
 def analyse_data(dogname): 
 #	'''  this function extracts the dog data we want from its history '''
 	filedogname2=dogname + "-rh.txt"
-	print "filename is ", filedogname2
 	#fd3=open(filedogname2,"r")
 	#fd3=open("./frettenham+flyer-rh.txt","rb")
 	fd=open(dogname +"-data.txt","w")
@@ -57,9 +56,16 @@ def readdogs(dogname):
 def getdognames():
 	''' this function reads a list of dognames from file '''
 	dogname=open(dognames,"r").readlines()
+	count=0
 	for n in dogname:
+		count+=1
 		print n
 		readdogs(n)
+	if count >6:
+		print "number of dogs is ",count
+		print "currently only working on 6 dogs, will change in future!"
+		print "exiting - delete a dog from dognames.txt"
+		exit()
 
 def readdogspec(dogname):
 	''' this function finds the specific URL for each dog and then downloads the dog history '''
@@ -161,7 +167,6 @@ def calc_moving_average(dogname):
 	  pos=pos[:-2]
       	  pos=int(pos)
 	  calt=splitline[6]
-	  print calt
 	  calctime = calt
 	  rat=ratings[grade][pos]
       	  #if calctime != 0:
