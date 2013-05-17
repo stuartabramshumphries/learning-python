@@ -153,6 +153,7 @@ def calc_moving_average(dogname):
       try:
        fd=open(dogname +"-data.txt","r")
        fd2=open("ratings.out.txt","a")
+       fd3=open("calctime-mvavg.out.txt","a")
       except:
        pass
       
@@ -167,23 +168,27 @@ def calc_moving_average(dogname):
 	  pos=pos[:-2]
       	  pos=int(pos)
 	  calt=splitline[6]
-	  calctime = calt
+	  calctime = float(calt)
 	  rat=ratings[grade][pos]
-      	  #if calctime != 0:
-      	  #  data_calctime.append(calctime)
+      	  if calctime != 0:
+      	    data_calctime.append(calctime)
       	  if int(rat) != 0:
       	    data.append(rat)
 
       klist=list(movingaverage(data,period))
-      #klist2=list(movingaverage(data_calctime,period))
+      #print data_calctime
+      klist2=list(movingaverage(data_calctime,period))
+      print klist2
       v=(dogname,klist)
-      #v2=(dogname,klist2)
+      v2=(dogname,klist2)
       value=str(v)
-      #value2=str(v2)
+      value2=str(v2)
       fd2.write(value)
-      #fd2.write(value2)
+      fd3.write(value2)
       fd2.write("\n")
+      fd3.write("\n")
       fd2.close()
+      fd3.close()
       
 def generate_html_graph():
       ''' prints moving average data to html file thats viewed in a browser '''
