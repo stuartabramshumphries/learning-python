@@ -178,7 +178,6 @@ def calc_moving_average(dogname):
       klist=list(movingaverage(data,period))
       #print data_calctime
       klist2=list(movingaverage(data_calctime,period))
-      print klist2
       v=(dogname,klist)
       v2=(dogname,klist2)
       value=str(v)
@@ -201,6 +200,7 @@ def generate_html_graph():
          print "issues opening files\n"
 
       fd.write(txt)
+      fd1.write(txt)
 
 
       dogdat=[]
@@ -228,9 +228,34 @@ def generate_html_graph():
       fd.write(txt2)
       fd.close()
 
+      dogdat=[]
+      text=open("calctime-mvavg.out.txt","r").readlines()
+      count=0
+      for line in text:
+      	count+=1
+	line=re.sub("\'|\(|\[|\]|\)|\,","",line)
+	dogdat.append(line.split())
+      st1="['race #',"
+      fd1.write(st1)
+      for line in xrange(count):
+	st2="'" +dogdat[line][0] +"',"
+	fd1.write(st2)
+      fd1.write( "],")
+      line=0
+      for i in xrange(1,7):
+       st3=" ['" +str(i)+"'," +dogdat[line][i] +","+ dogdat[line+1][i] +","+dogdat[line+2][i]+","+dogdat[line+3][i]+","+dogdat[line+4][i]+","+dogdat[line+5][i]+",] "
+       fd1.write(st3) 
+       if i<=6:
+        fd1.write( ",")
+       else:
+        fd1.write( "]);")
+      fd1.write(txt2)
+      fd1.close()
 
 ''' add a check to see if file exists, then remove if it does, else it'll error here '''
 if os.path.exists("./ratings.out.txt"):
  os.remove("ratings.out.txt")
+if os.path.exists("./calctime-mvavg.out.txt"):
+ os.remove("calctime-mvavg.out.txt")
 getdognames()
 generate_html_graph()
