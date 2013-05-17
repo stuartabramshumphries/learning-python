@@ -147,6 +147,7 @@ def calc_moving_average(dogname):
       'P4':{1:99,2:86,3:77,4:66,5:53,6:42},
       'P6':{1:90,2:80,3:70,4:60,5:50,6:40},
       'IV':{1:170,2:152,3:143,4:133,5:122,6:106},
+      'IT':{1:170,2:152,3:143,4:133,5:122,6:106},
       'OR':{1:170,2:152,3:143,4:133,5:122,6:106}
       }
       period=1 # arbitrary here - maybe ask what moving average you want at the start?
@@ -244,7 +245,10 @@ def generate_html_graph():
       fd1.write( "],")
       line=0
       for i in xrange(1,7):
-       st3=" ['" +str(i)+"'," +dogdat[line][i] +","+ dogdat[line+1][i] +","+dogdat[line+2][i]+","+dogdat[line+3][i]+","+dogdat[line+4][i]+","+dogdat[line+5][i]+",] "
+       try:
+        st3=" ['" +str(i)+"'," +dogdat[line][i] +","+ dogdat[line+1][i] +","+dogdat[line+2][i]+","+dogdat[line+3][i]+","+dogdat[line+4][i]+","+dogdat[line+5][i]+",] "
+       except:
+        pass
        fd1.write(st3) 
        if i<=6:
         fd1.write( ",")
