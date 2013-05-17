@@ -195,7 +195,8 @@ def generate_html_graph():
       try:
          txt=open("./header","r").read()
          txt2=open("./footer","r").read()
-         fd=open("./graph.html","w")
+         fd=open("./ratings-graph.html","w")
+         fd1=open("./calctime-graph.html","w")
       except:
          print "issues opening files\n"
 
@@ -204,6 +205,7 @@ def generate_html_graph():
 
       dogdat=[]
       text=open("ratings.out.txt","r").readlines()
+      text1=open("calctime-mvavg.out.txt","r").readlines()
       count=0
       for line in text:
       	count+=1
