@@ -193,7 +193,8 @@ def generate_html_graph():
       ''' prints moving average data to html file thats viewed in a browser '''
       try:
          txt=open("./header","r").read()
-         txt2=open("./footer","r").read()
+         txt2=open("./footer.ratings","r").read()
+         txt3=open("./footer.time","r").read()
          fd=open("./ratings-graph.html","w")
          fd1=open("./calctime-graph.html","w")
       except:
@@ -249,7 +250,7 @@ def generate_html_graph():
         fd1.write( ",")
        else:
         fd1.write( "]);")
-      fd1.write(txt2)
+      fd1.write(txt3)
       fd1.close()
 
 ''' add a check to see if file exists, then remove if it does, else it'll error here '''
