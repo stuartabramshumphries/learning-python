@@ -1,7 +1,7 @@
 ]);
 
         var options = {
-          title: 'Calculated Time Moving Averages'
+          title: 'Calculated Time Moving Average'
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('chart_div'));

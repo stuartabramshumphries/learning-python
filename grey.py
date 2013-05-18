@@ -10,7 +10,7 @@ dognames="./dognames.txt"
 
 
 def analyse_data(dogname): 
-#	'''  this function extracts the dog data we want from its history '''
+	'''  this function extracts the dog data we want from its history '''
 	filedogname2=dogname + "-rh.txt"
 	#fd3=open(filedogname2,"r")
 	#fd3=open("./frettenham+flyer-rh.txt","rb")

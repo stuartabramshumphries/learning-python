@@ -1,7 +1,7 @@
 ]);
 
         var options = {
-          title: 'Ratings Moving Averages'
+          title: 'Rating Moving Averages'
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
