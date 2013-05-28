@@ -8,6 +8,54 @@ from multiprocessing import Process
 
 dognames="./dognames.txt"
 
+def getdognames():
+	''' this function reads a list of dognames from file '''
+	dogname=open(dognames,"r").readlines()
+	count=0
+	for n in dogname:
+		count+=1
+		print n
+		readdogs(n)
+	if count >6:
+		print "number of dogs is ",count
+		print "currently only working on 6 dogs, will change in future!"
+		print "exiting - delete a dog from dognames.txt"
+		exit()
+
+def readdogs(dogname):
+	'''  this function reads the primary web page for eachdog '''
+	dogname=dogname.replace(" ","%20")
+	f=urllib.urlopen("http://www.gbgb.org.uk/raceCard.aspx?dogName="+dogname)
+	ddogname=dogname.rstrip()+".txt"
+	webout=open(ddogname,"w")
+	s=f.read()
+	webout.write(s)
+	f.close()
+	webout.close()
+	extractdata(ddogname,dogname)
+	os.remove(ddogname)
+
+def extractdata(filedogname,dogname):
+	'''  what this function does is to format the downloaded history - basically get rid of the extraneous html '''
+	flag = 1
+	fd=open(filedogname,"r")	
+	filedogname2=dogname + "-rh.txt"
+	fd2=open(filedogname2,"w")	
+	data=fd.readlines()
+	for line in data:
+ 	  if '<td class="RCelement"><a href="' in line:
+ 	   fd2.write(line)
+ 	   flag = 0
+ 	  if re.search('\s+\<\/table>',line): 
+ 	   flag = 1
+ 	  if not flag and not '<td class="RCelement"><a href="' in line:
+ 	   fd2.write(line)
+
+
+	fd.close()
+	#os.remove(filedogname)
+	fd2.close()
+	analyse_data(dogname)
 
 def analyse_data(dogname): 
 	'''  this function extracts the dog data we want from its history '''
@@ -40,78 +88,9 @@ def analyse_data(dogname):
 	fd.close()
 	#os.remove(filedogname2)
 	calc_moving_average(dogname)
-def readdogs(dogname):
-	'''  this function reads the primary web page for eachdog '''
-	dogname=dogname.replace(" ","+")
-	f=urllib.urlopen("http://thedogs.co.uk/trap6/res_dog_search.php?txtDogName="+dogname)
-	ddogname=dogname.rstrip()+".txt"
-	webout=open(ddogname,"w")
-	s=f.read()
-	webout.write(s)
-	f.close()
-	webout.close()
-	readdogspec(dogname)
-	#os.remove(ddogname)
-
-def getdognames():
-	''' this function reads a list of dognames from file '''
-	dogname=open(dognames,"r").readlines()
-	count=0
-	for n in dogname:
-		count+=1
-		print n
-		readdogs(n)
-	if count >6:
-		print "number of dogs is ",count
-		print "currently only working on 6 dogs, will change in future!"
-		print "exiting - delete a dog from dognames.txt"
-		exit()
-
-def readdogspec(dogname):
-	''' this function finds the specific URL for each dog and then downloads the dog history '''
-	n2=open(dogname.rstrip()+".txt","r").readlines()
-	for line in n2:
-	    if "dogid" in line:
-	    	datstring=line
-		result=re.search('(.*)dogid=(.*)" onMouseOver(.*)',line)
-		dogid=result.group(2)
-		getdogdata(dogid,dogname)
-
-def getdogdata(dogid,dogname):
-	''' this function downloads the individual dogs race history, from its dogid '''
-	import re
-	dogname=dogname.rstrip()
-	filedogname=dogname + "-racehist.txt"
-	fd=open(filedogname,"w")
-	ur="http://thedogs.co.uk/trap6/res_dog_history.php?dogid="+dogid
-	f=urllib.urlopen(ur)
-	data=f.read()
-	fd.write(data)
-	f.close()
-	fd.close()
-	extractdata(filedogname,dogname)
-
-def extractdata(filedogname,dogname):
-	'''  what this function does is to format the downloaded history - basically get rid of the extraneous html '''
-	flag = 1
-	fd=open(filedogname,"r")	
-	filedogname2=dogname + "-rh.txt"
-	fd2=open(filedogname2,"w")	
-	data=fd.readlines()
-	for line in data:
- 	  if '<td class="RCelement"><a href="' in line:
- 	   fd2.write(line)
- 	   flag = 0
- 	  if re.search('\s+\<\/table>',line): 
- 	   flag = 1
- 	  if not flag and not '<td class="RCelement"><a href="' in line:
- 	   fd2.write(line)
+	 
 
 
-	fd.close()
-	#os.remove(filedogname)
-	fd2.close()
-	analyse_data(dogname)
 
 
 def calc_moving_average(dogname):
@@ -258,9 +237,12 @@ def generate_html_graph():
       fd1.close()
 
 ''' add a check to see if file exists, then remove if it does, else it'll error here '''
+
 if os.path.exists("./ratings.out.txt"):
  os.remove("ratings.out.txt")
+
 if os.path.exists("./calctime-mvavg.out.txt"):
  os.remove("calctime-mvavg.out.txt")
+
 getdognames()
-generate_html_graph()
+#generate_html_graph()
