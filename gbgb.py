@@ -33,7 +33,7 @@ def readdogs(dogname):
 	f.close()
 	webout.close()
 	extractdata(ddogname,dogname)
-	os.remove(ddogname)
+#	os.remove(ddogname)
 
 def extractdata(filedogname,dogname):
 	'''  what this function does is to format the downloaded history - basically get rid of the extraneous html '''
@@ -43,25 +43,23 @@ def extractdata(filedogname,dogname):
 	fd2=open(filedogname2,"w")	
 	data=fd.readlines()
 	for line in data:
- 	  if '<td class="RCelement"><a href="' in line:
+ 	  #if '<td class="RCelement"><a href="' in line:
+ 	  if '<td align="center"' in line:
  	   fd2.write(line)
  	   flag = 0
  	  if re.search('\s+\<\/table>',line): 
  	   flag = 1
- 	  if not flag and not '<td class="RCelement"><a href="' in line:
+ 	  if not flag and not '<td align="center"' in line:
  	   fd2.write(line)
 
 
 	fd.close()
 	#os.remove(filedogname)
 	fd2.close()
-	analyse_data(dogname)
+#	analyse_data(dogname)
 
 def analyse_data(dogname): 
 	'''  this function extracts the dog data we want from its history '''
-	filedogname2=dogname + "-rh.txt"
-	#fd3=open(filedogname2,"r")
-	#fd3=open("./frettenham+flyer-rh.txt","rb")
 	fd=open(dogname +"-data.txt","w")
 	fd3=open(dogname + "-rh.txt","r+")
 	data=fd3.readlines()
@@ -86,7 +84,6 @@ def analyse_data(dogname):
 
 	
 	fd.close()
-	#os.remove(filedogname2)
 	calc_moving_average(dogname)
 	 
 
