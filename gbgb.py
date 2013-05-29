@@ -33,7 +33,7 @@ def readdogs(dogname):
 	f.close()
 	webout.close()
 	extractdata(ddogname,dogname)
-#	os.remove(ddogname)
+	os.remove(ddogname)
 
 def extractdata(filedogname,dogname):
 	'''  what this function does is to format the downloaded history - basically get rid of the extraneous html '''
@@ -47,8 +47,10 @@ def extractdata(filedogname,dogname):
  	  if '<td align="center"' in line:
  	   fd2.write(line)
  	   flag = 0
- 	  if re.search('\s+\<\/table>',line): 
+ 	  if re.search('\s+\<\/tbody\>',line): 
  	   flag = 1
+	  if re.search('\s+\<\/tr\>\<tr class="Grid',line):
+	   flag = 1
  	  if not flag and not '<td align="center"' in line:
  	   fd2.write(line)
 
