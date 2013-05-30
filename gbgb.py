@@ -70,7 +70,18 @@ def analyse_data(dogname):
 	data=fd3.readlines()
 	fd3.close()
 	for i,line in enumerate(data):
-#		 print i,line,"\n"
+		nstr=line.replace('<td align="center" valign="middle" ','')
+		ostr=nstr.replace('<td align="center" ','')
+		pstr=ostr.replace('<td align="left" ','')
+		nnstr=pstr.replace('style="white-space:nowrap;">','"')
+		npstr=nnstr.replace('</td>','" ')
+		npstr=npstr.split('<td style=')[0]
+		spltdata=npstr.split('"')
+		if len(spltdata) >10:
+		 strg=spltdata[1]+" "+spltdata[3]+" "+spltdata[9]+" "+spltdata[25]+" "+spltdata[27]
+		# strg2=strg.replace('"','')
+		# print strg2
+		print strg
 		
 	
 	fd.close()
