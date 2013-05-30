@@ -78,10 +78,12 @@ def analyse_data(dogname):
 		npstr=npstr.split('<td style=')[0]
 		spltdata=npstr.split('"')
 		if len(spltdata) >10:
+		 if spltdata[27] == '&nbsp;':
+		  spltdata[27]='0'
 		 strg=spltdata[1]+" "+spltdata[3]+" "+spltdata[9]+" "+spltdata[25]+" "+spltdata[27]
-		# strg2=strg.replace('"','')
-		# print strg2
-		print strg
+		 strg2=strg.replace('"','')
+		 fd.write( strg2 )
+		 fd.write( "\n" )
 		
 	
 	fd.close()
