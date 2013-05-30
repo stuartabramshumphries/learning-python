@@ -70,25 +70,8 @@ def analyse_data(dogname):
 	data=fd3.readlines()
 	fd3.close()
 	for i,line in enumerate(data):
-		 print i,line,"\n"
-		 '''
-		 if '<td class="RCelement"><a href="res_race_result.php?raceid=' in line:
-		   line=line.replace('<td class="RCelement"><a href="res_race_result.php?raceid=','')		   
-		   line=line.replace('</a></td>',' ')
-		   line=re.sub(r"^.*\>","",line)
-		   if i != 0:
-		    fd.write("\n")
-                   fd.write(line.strip()),
-                   fd.write(" "),
-		 
-		 else:
-		  for j in [1,3,4,9,12,13]:
-		   if i == j or (i-j) % 16 == 0:
-		     line=line.replace('<td class="RCelement">','')
-		     line=re.sub(r"</td>$",'',line)
-		     fd.write(line.strip()),
-		     fd.write(" "),
-'''
+#		 print i,line,"\n"
+		
 	
 	fd.close()
 	#calc_moving_average(dogname)
