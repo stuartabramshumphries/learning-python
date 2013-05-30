@@ -33,7 +33,7 @@ def readdogs(dogname):
 	f.close()
 	webout.close()
 	extractdata(ddogname,dogname)
-	os.remove(ddogname)
+	#os.remove(ddogname)
 
 def extractdata(filedogname,dogname):
 	'''  what this function does is to format the downloaded history - basically get rid of the extraneous html '''
@@ -57,7 +57,7 @@ def extractdata(filedogname,dogname):
 
 
 	fd.close()
-	#os.remove(filedogname)
+	os.remove(filedogname)
 	fd2.close()
 	analyse_data(dogname)
 
@@ -87,6 +87,7 @@ def analyse_data(dogname):
 	
 	fd.close()
 	calc_moving_average(dogname)
+	os.remove(dogname + "-rh.txt")
 	 
 
 
@@ -169,7 +170,8 @@ def calc_moving_average(dogname):
       fd3.close()
       
 def generate_html_graph():
-      ''' prints moving average data to html file thats viewed in a browser '''
+      ''' prints moving average data to html file thats viewed in a browser
+          the basic way I've written this need at least 6 races for 6 dogs, else fails'''
       try:
          txt=open("./header","r").read()
          txt2=open("./footer.ratings","r").read()
@@ -200,7 +202,6 @@ def generate_html_graph():
       line=0
       for i in xrange(1,7):
        st3=" ['" +str(i)+"'," +dogdat[line][i] +","+ dogdat[line+1][i] +","+dogdat[line+2][i]+","+dogdat[line+3][i]+","+dogdat[line+4][i]+","+dogdat[line+5][i]+",] "
-       print st3
        fd.write(st3) 
        if i<=6:
         fd.write( ",")
