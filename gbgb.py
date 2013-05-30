@@ -37,6 +37,7 @@ def readdogs(dogname):
 
 def extractdata(filedogname,dogname):
 	'''  what this function does is to format the downloaded history - basically get rid of the extraneous html '''
+	dogname=dogname.rstrip()
 	flag = 1
 	fd=open(filedogname,"r")	
 	filedogname2=dogname + "-rh.txt"
