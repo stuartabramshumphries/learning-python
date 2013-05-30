@@ -1,4 +1,5 @@
 *.py[cod]
+ss
 *txt*
 *git*
 *.html
