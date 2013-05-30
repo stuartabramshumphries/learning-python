@@ -16,10 +16,10 @@ def getdognames():
 		count+=1
 		print n
 		readdogs(n)
-	if count >6:
+	if count != 6:
 		print "number of dogs is ",count
 		print "currently only working on 6 dogs, will change in future!"
-		print "exiting - delete a dog from dognames.txt"
+		print "exiting "
 		exit()
 
 def readdogs(dogname):
@@ -236,6 +236,7 @@ def generate_html_graph():
         fd1.write( "]);")
       fd1.write(txt3)
       fd1.close()
+      print "open ratings-graph.html and calctime-graph.html"
 
 ''' add a check to see if file exists, then remove if it does, else it'll error here '''
 
