@@ -63,7 +63,6 @@ def extractdata(filedogname,dogname):
 
 def analyse_data(dogname): 
 	'''  this function extracts the dog data we want from its history '''
-	print "in analyse data ", dogname
 	count=0
 	fd=open(dogname +"-data.txt","w")
 	fd3=open(dogname + "-rh.txt","r+")
@@ -87,7 +86,7 @@ def analyse_data(dogname):
 		
 	
 	fd.close()
-	#calc_moving_average(dogname)
+	calc_moving_average(dogname)
 	 
 
 
@@ -120,6 +119,7 @@ def calc_moving_average(dogname):
       'KS':{1:138,2:125,3:113,4:102,5:87,6:73},
       'HP':{1:145,2:130,3:118,4:107,5:97,6:86},
       'D3':{1:133,2:118,3:106,4:95,5:85,6:71},
+      'D1':{1:133,2:118,3:106,4:95,5:85,6:71},
       'E1':{1:118,2:103,3:91,4:82,5:69,6:58},
       'H3':{1:118,2:103,3:91,4:82,5:69,6:58},
       'P3':{1:99,2:86,3:77,4:66,5:53,6:42},
@@ -129,25 +129,24 @@ def calc_moving_average(dogname):
       'IT':{1:170,2:152,3:143,4:133,5:122,6:106},
       'OR':{1:170,2:152,3:143,4:133,5:122,6:106}
       }
-      period=1 # arbitrary here - maybe ask what moving average you want at the start?
+      period=3 # arbitrary here - maybe ask what moving average you want at the start?
       try:
        fd=open(dogname +"-data.txt","r")
        fd2=open("ratings.out.txt","a")
        fd3=open("calctime-mvavg.out.txt","a")
       except:
-       pass
-      
+     	pass 
       dat=fd.readlines()
       data=[]
       data_calctime=[]
       for line in dat:
 	 splitline=line.split()
-	 if len(splitline) == 7:
-	  pos=splitline[3]
-	  grade=splitline[5]
+	 if len(splitline) == 5:
+	  pos=splitline[2]
+	  grade=splitline[3]
 	  pos=pos[:-2]
       	  pos=int(pos)
-	  calt=splitline[6]
+	  calt=splitline[4]
 	  calctime = float(calt)
 	  rat=ratings[grade][pos]
       	  if calctime != 0:
@@ -156,8 +155,8 @@ def calc_moving_average(dogname):
       	    data.append(rat)
 
       klist=list(movingaverage(data,period))
-      #print data_calctime
       klist2=list(movingaverage(data_calctime,period))
+      dogname=dogname.replace('%20','+')
       v=(dogname,klist)
       v2=(dogname,klist2)
       value=str(v)
@@ -201,6 +200,7 @@ def generate_html_graph():
       line=0
       for i in xrange(1,7):
        st3=" ['" +str(i)+"'," +dogdat[line][i] +","+ dogdat[line+1][i] +","+dogdat[line+2][i]+","+dogdat[line+3][i]+","+dogdat[line+4][i]+","+dogdat[line+5][i]+",] "
+       print st3
        fd.write(st3) 
        if i<=6:
         fd.write( ",")
@@ -245,4 +245,4 @@ if os.path.exists("./calctime-mvavg.out.txt"):
  os.remove("calctime-mvavg.out.txt")
 
 getdognames()
-#generate_html_graph()
+generate_html_graph()
