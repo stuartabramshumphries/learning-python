@@ -59,15 +59,19 @@ def extractdata(filedogname,dogname):
 	fd.close()
 	#os.remove(filedogname)
 	fd2.close()
-#	analyse_data(dogname)
+	analyse_data(dogname)
 
 def analyse_data(dogname): 
 	'''  this function extracts the dog data we want from its history '''
+	print "in analyse data ", dogname
+	count=0
 	fd=open(dogname +"-data.txt","w")
 	fd3=open(dogname + "-rh.txt","r+")
 	data=fd3.readlines()
 	fd3.close()
 	for i,line in enumerate(data):
+		 print i,line,"\n"
+		 '''
 		 if '<td class="RCelement"><a href="res_race_result.php?raceid=' in line:
 		   line=line.replace('<td class="RCelement"><a href="res_race_result.php?raceid=','')		   
 		   line=line.replace('</a></td>',' ')
@@ -84,10 +88,10 @@ def analyse_data(dogname):
 		     line=re.sub(r"</td>$",'',line)
 		     fd.write(line.strip()),
 		     fd.write(" "),
-
+'''
 	
 	fd.close()
-	calc_moving_average(dogname)
+	#calc_moving_average(dogname)
 	 
 
 
