@@ -14,7 +14,7 @@ def analyse_data(dogname):
 	filedogname2=dogname + "-rh.txt"
 	#fd3=open(filedogname2,"r")
 	#fd3=open("./frettenham+flyer-rh.txt","rb")
-	fd=open(dogname +"-data.txt","w")
+	fd=open(dogname +"-data.csv","w")
 	fd3=open(dogname + "-rh.txt","r+")
 	data=fd3.readlines()
 	fd3.close()
@@ -163,9 +163,9 @@ def calc_moving_average(dogname):
 
       period=1 # arbitrary here - maybe ask what moving average you want at the start?
       try:
-       fd=open(dogname +"-data.txt","r")
-       fd2=open("ratings.out.txt","a")
-       fd3=open("calctime-mvavg.out.txt","a")
+       fd=open(dogname +"-data.csv","r")
+       fd2=open("ratings.out.csv","a")
+       fd3=open("calctime-mvavg.out.csv","a")
       except:
        pass
       
@@ -217,8 +217,8 @@ def generate_html_graph():
 
 
       dogdat=[]
-      text=open("ratings.out.txt","r").readlines()
-      text1=open("calctime-mvavg.out.txt","r").readlines()
+      text=open("ratings.out.csv","r").readlines()
+      text1=open("calctime-mvavg.out.csv","r").readlines()
       count=0
       for line in text:
       	count+=1
@@ -242,7 +242,7 @@ def generate_html_graph():
       fd.close()
 
       dogdat=[]
-      text=open("calctime-mvavg.out.txt","r").readlines()
+      text=open("calctime-mvavg.out.csv","r").readlines()
       count=0
       for line in text:
       	count+=1
@@ -268,10 +268,14 @@ def generate_html_graph():
       fd1.write(txt3)
       fd1.close()
 
+
+
+
 ''' add a check to see if file exists, then remove if it does, else it'll error here '''
-if os.path.exists("./ratings.out.txt"):
- os.remove("ratings.out.txt")
-if os.path.exists("./calctime-mvavg.out.txt"):
- os.remove("calctime-mvavg.out.txt")
+if os.path.exists("./ratings.out.csv"):
+ os.remove("ratings.out.csv")
+if os.path.exists("./calctime-mvavg.out.csv"):
+ os.remove("calctime-mvavg.out.csv")
+
 getdognames()
 #generate_html_graph()
