@@ -38,7 +38,7 @@ def analyse_data(dogname):
 
 	
 	fd.close()
-	#os.remove(filedogname2)
+	os.remove(filedogname2)
 	calc_moving_average(dogname)
 def readdogs(dogname):
 	'''  this function reads the primary web page for eachdog '''
@@ -51,7 +51,7 @@ def readdogs(dogname):
 	f.close()
 	webout.close()
 	readdogspec(dogname)
-	#os.remove(ddogname)
+	os.remove(ddogname)
 
 def getdognames():
 	''' this function reads a list of dognames from file '''
@@ -109,7 +109,7 @@ def extractdata(filedogname,dogname):
 
 
 	fd.close()
-	#os.remove(filedogname)
+	os.remove(filedogname)
 	fd2.close()
 	analyse_data(dogname)
 
@@ -188,12 +188,21 @@ def calc_moving_average(dogname):
       	    data.append(rat)
 
       klist=list(movingaverage(data,period))
-      #print data_calctime
       klist2=list(movingaverage(data_calctime,period))
       v=(dogname,klist)
       v2=(dogname,klist2)
       value=str(v)
+      value=value.replace("('","")
+      value=value.replace("])","")
+      value=value.replace("([","")
+      value=value.replace("[","")
+      value=value.replace("'","")
       value2=str(v2)
+      value2=value2.replace("('","")
+      value2=value2.replace("])","")
+      value2=value2.replace("([","")
+      value2=value2.replace("[","")
+      value2=value2.replace("'","")
       fd2.write(value)
       fd3.write(value2)
       fd2.write("\n")
