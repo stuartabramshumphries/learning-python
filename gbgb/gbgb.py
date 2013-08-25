@@ -9,6 +9,8 @@ from multiprocessing import Process
 def analyse_data(dogname): 
 	'''  this function extracts the dog data we want from its history '''
 	count=0
+	#dogname=dogname.replace(" ","%20")
+	dogname=dogname.replace("%20","+")
 	fd=open(dogname +"-data.csv","w")
 	fd3=open(dogname + "-rh.txt","r+")
 	data=fd3.readlines()
@@ -65,6 +67,7 @@ def readdogs(dogname):
 def extractdata(filedogname,dogname):
 	'''  what this function does is to format the downloaded history - basically get rid of the extraneous html '''
 	dogname=dogname.rstrip()
+	dogname=dogname.replace("%20","+")
 	flag = 1
 	fd=open(filedogname,"r")	
 	filedogname2=dogname + "-rh.txt"
@@ -153,7 +156,6 @@ def calc_moving_average(dogname):
       data_calctime=[]
       for line in dat:
 	 splitline=line.split()
-	 print splitline
 	 if len(splitline) == 6:
 	  pos=splitline[3]
 	  brk=splitline[2]
@@ -162,7 +164,6 @@ def calc_moving_average(dogname):
       	  pos=int(pos)
 	  calt=splitline[5]
 	  calctime = float(calt)
-	  print pos,brk,grade,calt
 	  rat=ratings[grade][pos]
       	  if calctime != 0:
       	    data_calctime.append(calctime)
