@@ -24,7 +24,7 @@ def analyse_data(dogname):
 		if len(spltdata) >10:
 		 if spltdata[27] == '&nbsp;':
 		  spltdata[27]='0'
-		 strg=spltdata[1]+" "+spltdata[3]+" "+spltdata[9]+" "+spltdata[25]+" "+spltdata[27]
+		 strg=spltdata[1]+" "+spltdata[3]+" "+spltdata[7] +" "+spltdata[9]+" "+spltdata[25]+" "+spltdata[27]
 		 strg2=strg.replace('"','')
 		 fd.write( strg2 )
 		 fd.write( "\n" )
@@ -153,13 +153,16 @@ def calc_moving_average(dogname):
       data_calctime=[]
       for line in dat:
 	 splitline=line.split()
-	 if len(splitline) == 5:
-	  pos=splitline[2]
-	  grade=splitline[3]
+	 print splitline
+	 if len(splitline) == 6:
+	  pos=splitline[3]
+	  brk=splitline[2]
+	  grade=splitline[4]
 	  pos=pos[:-2]
       	  pos=int(pos)
-	  calt=splitline[4]
+	  calt=splitline[5]
 	  calctime = float(calt)
+	  print pos,brk,grade,calt
 	  rat=ratings[grade][pos]
       	  if calctime != 0:
       	    data_calctime.append(calctime)
@@ -180,74 +183,6 @@ def calc_moving_average(dogname):
       fd2.close()
       fd3.close()
       
-def generate_html_graph():
-      ''' prints moving average data to html file thats viewed in a browser
-          the basic way I've written this need at least 6 races for 6 dogs, else fails'''
-      try:
-         txt=open("./header","r").read()
-         txt2=open("./footer.ratings","r").read()
-         txt3=open("./footer.time","r").read()
-         fd=open("./ratings-graph.html","w")
-         fd1=open("./calctime-graph.html","w")
-      except:
-         print "issues opening files\n"
-
-      fd.write(txt)
-      fd1.write(txt)
-
-
-      dogdat=[]
-      text=open("ratings.out.csv","r").readlines()
-      text1=open("calctime-mvavg.out.csv","r").readlines()
-      count=0
-      for line in text:
-      	count+=1
-	line=re.sub("\'|\(|\[|\]|\)|\,","",line)
-	dogdat.append(line.split())
-      st1="['race #',"
-      fd.write(st1)
-      for line in xrange(count):
-	st2="'" +dogdat[line][0] +"',"
-	fd.write(st2)
-      fd.write( "],")
-      line=0
-      for i in xrange(1,7):
-       st3=" ['" +str(i)+"'," +dogdat[line][i] +","+ dogdat[line+1][i] +","+dogdat[line+2][i]+","+dogdat[line+3][i]+","+dogdat[line+4][i]+","+dogdat[line+5][i]+",] "
-       fd.write(st3) 
-       if i<=6:
-        fd.write( ",")
-       else:
-        fd.write( "]);")
-      fd.write(txt2)
-      fd.close()
-
-      dogdat=[]
-      text=open("calctime-mvavg.out.csv","r").readlines()
-      count=0
-      for line in text:
-      	count+=1
-	line=re.sub("\'|\(|\[|\]|\)|\,","",line)
-	dogdat.append(line.split())
-      st1="['race #',"
-      fd1.write(st1)
-      for line in xrange(count):
-	st2="'" +dogdat[line][0] +"',"
-	fd1.write(st2)
-      fd1.write( "],")
-      line=0
-      for i in xrange(1,7):
-       try:
-        st3=" ['" +str(i)+"'," +dogdat[line][i] +","+ dogdat[line+1][i] +","+dogdat[line+2][i]+","+dogdat[line+3][i]+","+dogdat[line+4][i]+","+dogdat[line+5][i]+",] "
-       except:
-        pass
-       fd1.write(st3) 
-       if i<=6:
-        fd1.write( ",")
-       else:
-        fd1.write( "]);")
-      fd1.write(txt3)
-      fd1.close()
-      print "open ratings-graph.html and calctime-graph.html"
 
 ''' add a check to see if file exists, then remove if it does, else it'll error here '''
 
@@ -259,4 +194,3 @@ if os.path.exists("./calctime-mvavg.out.csv"):
 
 getdognames()
 
-#generate_html_graph()
