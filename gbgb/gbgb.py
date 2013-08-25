@@ -26,7 +26,7 @@ def analyse_data(dogname):
 		if len(spltdata) >10:
 		 if spltdata[27] == '&nbsp;':
 		  spltdata[27]='0'
-		 strg=spltdata[1]+" "+spltdata[3]+" "+spltdata[7] +" "+spltdata[9]+" "+spltdata[19]+" "+spltdata[25]+" "+spltdata[27]
+		 strg=spltdata[1]+","+spltdata[3]+","+spltdata[7] +","+spltdata[9]+","+spltdata[19]+","+spltdata[25]+","+spltdata[27]
 		 strg2=strg.replace('"','')
 		 fd.write( strg2 )
 		 fd.write( "\n" )
@@ -155,7 +155,7 @@ def calc_moving_average(dogname):
       data=[]
       data_calctime=[]
       for line in dat:
-	 splitline=line.split()
+	 splitline=line.split(",")
 	 if len(splitline) == 7:
 	  pos=splitline[3]
 	  brk=splitline[2]
