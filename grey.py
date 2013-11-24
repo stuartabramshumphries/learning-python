@@ -19,6 +19,7 @@ def analyse_data(dogname):
 	data=fd3.readlines()
 	fd3.close()
 	for i,line in enumerate(data):
+
 		 if '<td class="RCelement"><a href="res_race_result.php?raceid=' in line:
 		   line=line.replace('<td class="RCelement"><a href="res_race_result.php?raceid=','')		   
 		   line=line.replace('</a></td>',' ')
@@ -40,6 +41,7 @@ def analyse_data(dogname):
 	fd.close()
 	os.remove(filedogname2)
 	calc_moving_average(dogname)
+
 def readdogs(dogname):
 	'''  this function reads the primary web page for eachdog '''
 	dogname=dogname.replace(" ","+")
@@ -117,7 +119,9 @@ def extractdata(filedogname,dogname):
 def calc_moving_average(dogname):
       
       ''' basically movingaverage(data,period) , where data is a list/tuple? '''
-      
+       
+      fd4=open("./grades.csv","a")
+
       ratings={
       'A1':{1:138,2:120,3:112,4:94,5:86,6:78},
       'A2':{1:130,2:112,3:104,4:86,5:78,6:70},
@@ -130,6 +134,7 @@ def calc_moving_average(dogname):
       'A9':{1:74,2:56,3:48,4:30,5:22,6:14},
       'A10':{1:66,2:48,3:40,4:22,5:14,6:8},
       'A11':{1:58,2:40,3:32,4:14,5:6,6:6},
+      'B1':{1:58,2:40,3:32,4:14,5:6,6:6},
       'B2':{1:58,2:40,3:32,4:14,5:6,6:6},
       'S1':{1:122,2:104,3:96,4:78,5:70,6:62},
       'S2':{1:114,2:96,3:88,4:70,5:62,6:54},
@@ -172,6 +177,7 @@ def calc_moving_average(dogname):
       dat=fd.readlines()
       data=[]
       data_calctime=[]
+      cnt=0
       for line in dat:
 	 splitline=line.split()
 	 if len(splitline) == 7:
@@ -182,11 +188,14 @@ def calc_moving_average(dogname):
 	  calt=splitline[6]
 	  calctime = float(calt)
 	  rat=ratings[grade][pos]
+	  if  cnt==0:
+	    datal=dogname+","+grade+"\n"
+	    fd4.write(datal)
       	  if calctime != 0:
       	    data_calctime.append(calctime)
       	  if int(rat) != 0:
       	    data.append(rat)
-
+	  cnt+=1
       klist=list(movingaverage(data,period))
       klist2=list(movingaverage(data_calctime,period))
       v=(dogname,klist)
@@ -209,6 +218,7 @@ def calc_moving_average(dogname):
       fd3.write("\n")
       fd2.close()
       fd3.close()
+      fd4.close()
       
 def generate_html_graph():
       ''' prints moving average data to html file thats viewed in a browser '''
